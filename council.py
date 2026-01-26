@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/home/adi/Council-Of-LLMs/.venv/bin/python
 
 import subprocess
 import re
@@ -7,25 +7,14 @@ from rich.panel import Panel
 
 console = Console()
 
+MAX_ROUNDS = 2
+
 AGENTS = [
-    # --- Ministral agents ---
     {
         "name": "Indie Dev",
         "model": "ministral-3:14b",
         "style": "shipping mindset, simple and practical",
         "color": "green",
-    },
-    {
-        "name": "Optimizer",
-        "model": "ministral-3:14b",
-        "style": "reduces complexity, refactors aggressively",
-        "color": "blue",
-    },
-    {
-        "name": "Skeptic",
-        "model": "ministral-3:14b",
-        "style": "finds flaws, distrusts assumptions",
-        "color": "red",
     },
     {
         "name": "Career Advisor",
@@ -34,30 +23,10 @@ AGENTS = [
         "color": "yellow",
     },
     {
-        "name": "Pragmatist",
-        "model": "ministral-3:14b",
-        "style": "what works now, minimal theory",
-        "color": "cyan",
-    },
-    {
-        "name": "Wildcard",
-        "model": "ministral-3:14b",
-        "style": "creative, unconventional, risky ideas",
-        "color": "bright_black",
-    },
-
-    # --- Qwen heavy hitters ---
-    {
         "name": "Senior Architect",
-        "model": "qwen3-coder:30b",
+        "model": "qwen3-coder:latest",
         "style": "system design, scalability, long-term maintenance",
         "color": "magenta",
-    },
-    {
-        "name": "Systems Reviewer",
-        "model": "qwen3-coder:30b",
-        "style": "deep critique, edge cases, failure modes",
-        "color": "white",
     },
 ]
 
@@ -72,6 +41,7 @@ RULES:
 - Be independent and critical.
 - Do NOT agree with others by default.
 - Be concise but precise.
+- Generate as fast as possible.
 
 OUTPUT FORMAT (STRICT):
 FINAL_ANSWER:
@@ -91,30 +61,42 @@ def run_agent(agent, question):
         question=question,
     )
 
-    proc = subprocess.run(
+    proc = subprocess.Popen(
         ["ollama", "run", agent["model"]],
-        input=prompt.encode(),
+        stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.DEVNULL,
+        text=True,
+        bufsize=1,
     )
 
-    output = proc.stdout.decode()
+    proc.stdin.write(prompt)
+    proc.stdin.close()
 
-    vote_match = re.search(r"VOTE:\s*(\d+)", output)
+    full_output = ""
+
+    console.print(f"[italic {agent['color']}]Generating…[/]\n", end="")
+
+    for line in proc.stdout:
+        full_output += line
+        console.print(line, end="", style=agent["color"])
+
+    proc.wait()
+
+    vote_match = re.search(r"VOTE:\s*(\d+)", full_output)
     vote = int(vote_match.group(1)) if vote_match else 0
 
-    return output.strip(), vote
+    return full_output.strip(), vote
 
-def main():
-    question = console.input("[bold]Enter your question:[/] ")
-
+def run_council(question):
     agents = AGENTS.copy()
     round_num = 1
 
-    while len(agents) > 1:
+    while len(agents) > 1 and round_num <= MAX_ROUNDS:
         console.rule(f"[bold]ROUND {round_num}[/bold]")
 
         results = []
+
         for agent in agents:
             console.rule(f"[{agent['color']}]{agent['name']}[/]")
             output, vote = run_agent(agent, question)
@@ -143,6 +125,29 @@ def main():
     console.rule("[bold green]FINAL WINNER[/bold green]")
     console.print(f"[bold]{agents[0]['name']}[/]")
 
+def main():
+    console.print(
+        "[bold green]Council of LLMs[/bold green] "
+        "(type 'exit' or 'quit' to leave)\n"
+    )
+
+    while True:
+        try:
+            question = console.input("[bold]Enter your question:[/] ").strip()
+        except EOFError:
+            console.print("\n[italic]Goodbye.[/italic]")
+            break
+
+        if question.lower() in {"exit", "quit"}:
+            console.print("[italic]Goodbye.[/italic]")
+            break
+
+        if not question:
+            continue
+
+        run_council(question)
+
+        console.print("\n[dim]Ask another question or type 'exit'.[/dim]\n")
+
 if __name__ == "__main__":
     main()
-#!/usr/bin/env python3
