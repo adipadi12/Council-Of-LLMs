@@ -3,10 +3,10 @@
 ## How to Use
 
 1. Have Ollama and models installed. I'm using Arch based CachyOS
-<pre>
+ <code>
     curl -fsSL https://ollama.com/install.sh | sh
     ollama run qwen3:latest //example
-  </code>
+   </code>
 3. Make council.py executable
   <code>
     chmod +x council.py
