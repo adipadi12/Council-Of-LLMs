@@ -4,17 +4,13 @@
 
 1. Have Ollama and models installed. I'm using Arch based CachyOS
 <pre>
-  <code>
     curl -fsSL https://ollama.com/install.sh | sh
-    ollama run <insert-model-name-here>
+    ollama run qwen3:latest //example
   </code>
-</pre>
 3. Make council.py executable
-<pre>
   <code>
     chmod +x council.py
   </code>
-</pre>
 5. Edit this part of the script as per your needs and wants
 <img width="586" height="731" alt="image" src="https://github.com/user-attachments/assets/9a10b5e2-c1ec-48e0-9970-b67cf4aa3233" />
 
