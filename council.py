@@ -11,23 +11,25 @@ MAX_ROUNDS = 2
 
 AGENTS = [
     {
-        "name": "Indie Dev",
+        "name": "BJP Andhbhakt",
         "model": "ministral-3:14b",
-        "style": "shipping mindset, simple and practical",
+        "style": "defends modi under any cost, patriotic, emotional, supports rapists, nationalist, will defend any action by bjp,"
+        "cares about hindutva, cow protection, religious values, casteism",
         "color": "green",
     },
     {
-        "name": "Career Advisor",
+        "name": "Leftist Intellectual Indian",
         "model": "ministral-3:14b",
-        "style": "long-term consequences, realism",
+        "style": "democratic social, pro-minorities, secular, supports free speech, critical of government, cares about social justice, equality, human rights, progressive",
         "color": "yellow",
     },
     {
-        "name": "Senior Architect",
+        "name": "Westerner having no stake in Indian Politics",
         "model": "qwen3-coder:latest",
-        "style": "system design, scalability, long-term maintenance",
-        "color": "magenta",
+        "style": "neutral, balanced, pragmatic, focuses on facts and data, avoids extreme views, considers multiple perspectives, values stability and gradual change",
+        "color": "cyan",
     },
+    
 ]
 
 PROMPT_TEMPLATE = """
