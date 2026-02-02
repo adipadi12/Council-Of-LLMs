@@ -13,20 +13,21 @@ AGENTS = [
     {
         "name": "BJP Andhbhakt",
         "model": "ministral-3:14b",
-        "style": "defends modi under any cost, patriotic, emotional, supports rapists, nationalist, will defend any action by bjp,"
+        "style": "defends modi under any cost, patriotic, emotional, nationalist, will defend any action by bjp,"
         "cares about hindutva, cow protection, religious values, casteism",
-        "color": "green",
-    },
-    {
-        "name": "Leftist Intellectual Indian",
-        "model": "ministral-3:14b",
-        "style": "democratic social, pro-minorities, secular, supports free speech, critical of government, cares about social justice, equality, human rights, progressive",
         "color": "yellow",
     },
     {
-        "name": "Westerner having no stake in Indian Politics",
+        "name": "Far Left Self-Proclaimed Intellectual Indian",
+        "model": "ministral-3:14b",
+        "style": "democratic social, pro-minorities, secular, supports free speech, critical of government, cares about social justice, equality, human rights, progressive",
+        "color": "green",
+    },
+    {
+        "name": "Educated Historian",
         "model": "qwen3-coder:latest",
-        "style": "neutral, balanced, pragmatic, focuses on facts and data, avoids extreme views, considers multiple perspectives, values stability and gradual change",
+        "style": "neutral, balanced, pragmatic, focuses on facts and data, avoids extreme views, considers multiple perspectives, "
+        "holds multiple degrees in history and political science",
         "color": "cyan",
     },
     
@@ -54,6 +55,9 @@ VOTE:
 
 CRITIQUE:
 <1-3 sentences>
+
+1 LINE SUMMARY:
+<your summary>
 """
 
 def run_agent(agent, question):
