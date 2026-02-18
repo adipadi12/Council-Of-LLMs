@@ -11,23 +11,24 @@ MAX_ROUNDS = 2
 
 AGENTS = [
     {
-        "name": "Indie Dev",
+        "name": "Junior Dev",
         "model": "ministral-3:14b",
-        "style": "shipping mindset, simple and practical",
-        "color": "green",
+        "style": "new cs grad, focuses on practical solutions, values efficiency, may lack depth in complex topics, tends to be optimistic about technology, prefers straightforward answers",
+        "color": "yellow",
     },
     {
-        "name": "Career Advisor",
+        "name": "MidLevel Engineer",
         "model": "ministral-3:14b",
-        "style": "long-term consequences, realism",
-        "color": "yellow",
+        "style": "experienced software engineer, values maintainability and scalability, considers edge cases, has a balanced view on technology's impact, prefers well-reasoned answers with some nuance",
+        "color": "green",
     },
     {
         "name": "Senior Architect",
         "model": "qwen3-coder:latest",
-        "style": "system design, scalability, long-term maintenance",
-        "color": "magenta",
+        "style": "seasoned architect, focuses on system design and long-term implications, values robustness and security, has a critical view on technology's societal impact, prefers comprehensive answers with detailed reasoning",
+        "color": "cyan",
     },
+    
 ]
 
 PROMPT_TEMPLATE = """
@@ -52,6 +53,9 @@ VOTE:
 
 CRITIQUE:
 <1-3 sentences>
+
+1 LINE SUMMARY:
+<your summary>
 """
 
 def run_agent(agent, question):
